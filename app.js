@@ -5,7 +5,8 @@
   var pictureOne;
   var pictureTwo;
   var pictureThree;
-
+  var timeClicked;
+  var timesDisplayed;
 
   var counter = 0;  //click counter set to 0
 
@@ -24,10 +25,10 @@
   var pictureGallery = []; //1. Create empty array
 
   function Images (filepath, Whodis){   //2. Constructor : Needs to be capital letter
-    filename = this.Whodis;
-    filepath = this.filepath;
-    timeClicked = 0;
-    timesDisplayed = 0;
+    this.Whodis = Whodis;
+    this.filepath = filepath;
+    this.timeClicked = 0;
+    this.timesDisplayed = 0;
     pictureGallery.push(this);
   }
 
@@ -53,37 +54,40 @@
   new Images ('img/water-can.jpg', 'water-can');
   new Images ('img/wine-glass.jpg', 'wine-glass');
 
-  function displayImage (){   //4. Access -- function that displays the pictures on page
-    randomNumberGenerator();
+
+  function displayImage (){   //4. Now Access -- function that displays the pictures on page
+    randomNumberGenerator(); //pulling the random number in
     var leftImg = document.getElementById('left');
-    leftImg.src = pictureOne;
-    pictureGallery.
-    pictureGallery.
-
-
+    leftImg.src = pictureOne.filepath;
 
     var centerImg = document.getElementById('center');
-    centerImg.src = pictureTwo;
+    centerImg.src = pictureTwo.filepath;
 
     var rightImg = document.getElementById('right');
-    rightImg.src = pictureThree;
-
+    rightImg.src = pictureThree.filepath;
   }
-  randomNumberGenerator();//calling the function here.
-  displayImage(); //calling the function here.
-  iteration();
+
+  displayImage(); //calling the function console.log(rightImg, pictureThree);here.
+
   // ***************************start the rotation process
 
-  var rotateImages = document.getElementByClass('wrapper');
+  var rotateImages = document.getElementById('wrapper');
   rotateImages.addEventListener('click',changeThePicturesShown);  //this is the clicking of the camera
 
   function changeThePicturesShown(event) {
-    if(event.target.elements.filename){
-
-      console.log(event.target);
+    if (event.target.id === 'wrapper'){
+      alert('Please click on an image.')
     }
+    
+
+    console.log(event.target.id);
+
+    // if(event.target.elements.filename){
+    //
+    //   console.log(event.target);
+    // }
 
   }
-  changeThePicturesShown();
+
   // var valueForName = event.target.elements.filename.value;
   // var valueForFilePath = event.target.elements.filepath.value;
