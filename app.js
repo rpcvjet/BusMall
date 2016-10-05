@@ -7,6 +7,7 @@
   var pictureThree;
   var timeClicked;
   var timesDisplayed;
+  var newNumbers;
 
   var counter = 0;  //click counter set to 0
 
@@ -21,6 +22,7 @@
     pictureTwo = pictureGallery[choiceTwo];
     pictureThree = pictureGallery[choiceThree];
   }
+
 
   var pictureGallery = []; //1. Create empty array
 
@@ -54,9 +56,10 @@
   new Images ('img/water-can.jpg', 'water-can');
   new Images ('img/wine-glass.jpg', 'wine-glass');
 
-
   function displayImage (){   //4. Now Access -- function that displays the pictures on page
+    var previousArray = [];
     randomNumberGenerator(); //pulling the random number in
+
     var leftImg = document.getElementById('left');
     leftImg.src = pictureOne.filepath;
     leftImg.alt = pictureOne.Whodis;
@@ -68,6 +71,36 @@
     var rightImg = document.getElementById('right');
     rightImg.src = pictureThree.filepath;
     rightImg.alt = pictureThree.Whodis;
+
+    //don't show any duplicate code!
+    var leftPicture = randomNumberGenerator();
+    while (leftPicture === previousArray[0] || leftPicture === previousArray[1] || leftPicture === previousArray[2])
+      {
+      leftPicture = randomNumberGenerator();
+    }
+    left.src = pictureGallery[leftPicture].filepath;
+
+    var centerPicture = randomNumberGenerator();
+    while (centerPicture === previousArray[0] || centerPicture === previousArray[1] || centerPicture === previousArray[2] || centerPicture === leftPicture)
+    {
+      centerPicture = randomNumberGenerator();
+    }
+    center.src = pictureGallery[centerPicture].filepath;
+
+    var rightPicture = randomNumberGenerator();
+    while (rightPicture === previousArray[0] || rightPicture === previousArray[1] || rightPicture === previousArray[2]
+    || rightPicture === leftPicture || rightPicture === centerPicture)
+    {
+      rightPicture = randomNumberGenerator();
+    }
+    right.src = pictureGallery[rightPicture].filepath;
+
+    previousArray.push('left');
+    console.log(newPreviousArray);
+
+    previousArray.push(leftPicture);
+    previousArray.push(centerPicture);
+    previousArray.push(rightPicture);
   }
 
   displayImage(); //calling the function console.log(rightImg, pictureThree);here.
@@ -79,25 +112,25 @@
 
   function changeThePicturesShown(event) {
     if (event.target.id === 'wrapper'){
-      alert('Please click on an image.')
+      alert('Please click on an image.');
     }
 
     for (var i = 0; i < pictureGallery.length; i++) {
       if(event.target.alt === pictureGallery[i].Whodis) {
-          pictureGallery[i].timeClicked += 1;
-          console.log(pictureGallery[i].Whodis + ' has' + pictureGallery[i].timeClicked +  ' clicks');
-          displayImage();
-        }
-
-
+        pictureGallery[i].timeClicked += 1;
+        displayImage();
+        counter += 1;
+      }
+      // if (counter === 25){
     }
+  }
 
 
     // if(event.target.elements.filename){
     //
     //   console.log(event.target)// }
 
-  }
+
 
   // var valueForName = event.target.elements.filename.value;
   // var valueForFilePath = event.target.elements.filepath.value;
