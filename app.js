@@ -18,7 +18,7 @@
     choiceTwo = Math.floor(Math.random() * 19) + 1;
     choiceThree = Math.floor(Math.random() * 19) + 1;
 
-    pictureOne = pictureGallery[choiceOne]; //made new variable that ties into pictureGallery. works. comes back with random     path    when i call randomNumberGenerator function.
+    pictureOne = pictureGallery[choiceOne]; //made new variable that ties into pictureGallery. works. comes back with random path when I call randomNumberGenerator function.
     pictureTwo = pictureGallery[choiceTwo];
     pictureThree = pictureGallery[choiceThree];
   }
@@ -26,7 +26,7 @@
 
   var pictureGallery = []; //1. Create empty array
 
-  function Images (filepath, Whodis){   //2. Constructor : Needs to be capital letter
+  function Images (filepath, Whodis) {   //2. Constructor : Needs to be capital letter
     this.Whodis = Whodis;
     this.filepath = filepath;
     this.timeClicked = 0;
@@ -77,26 +77,26 @@
     while (leftPicture === previousArray[0] || leftPicture === previousArray[1] || leftPicture === previousArray[2])
       {
       leftPicture = randomNumberGenerator();
+      break;
     }
-    left.src = pictureGallery[leftPicture].filepath;
+    left.src = pictureGallery[leftPicture];
 
     var centerPicture = randomNumberGenerator();
     while (centerPicture === previousArray[0] || centerPicture === previousArray[1] || centerPicture === previousArray[2] || centerPicture === leftPicture)
+      break;
     {
       centerPicture = randomNumberGenerator();
     }
-    center.src = pictureGallery[centerPicture].filepath;
+    center.src = pictureGallery[centerPicture];
 
     var rightPicture = randomNumberGenerator();
     while (rightPicture === previousArray[0] || rightPicture === previousArray[1] || rightPicture === previousArray[2]
     || rightPicture === leftPicture || rightPicture === centerPicture)
+      break;
     {
       rightPicture = randomNumberGenerator();
     }
-    right.src = pictureGallery[rightPicture].filepath;
-
-    previousArray.push('left');
-    console.log(newPreviousArray);
+    right.src = pictureGallery[rightPicture];
 
     previousArray.push(leftPicture);
     previousArray.push(centerPicture);
