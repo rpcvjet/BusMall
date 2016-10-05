@@ -59,12 +59,15 @@
     randomNumberGenerator(); //pulling the random number in
     var leftImg = document.getElementById('left');
     leftImg.src = pictureOne.filepath;
+    leftImg.alt = pictureOne.Whodis;
 
     var centerImg = document.getElementById('center');
     centerImg.src = pictureTwo.filepath;
+    centerImg.alt = pictureTwo.Whodis;
 
     var rightImg = document.getElementById('right');
     rightImg.src = pictureThree.filepath;
+    rightImg.alt = pictureThree.Whodis;
   }
 
   displayImage(); //calling the function console.log(rightImg, pictureThree);here.
@@ -78,14 +81,21 @@
     if (event.target.id === 'wrapper'){
       alert('Please click on an image.')
     }
-    
 
-    console.log(event.target.id);
+    for (var i = 0; i < pictureGallery.length; i++) {
+      if(event.target.alt === pictureGallery[i].Whodis) {
+          pictureGallery[i].timeClicked += 1;
+          console.log(pictureGallery[i].Whodis + ' has' + pictureGallery[i].timeClicked +  ' clicks');
+          displayImage();
+        }
+
+
+    }
+
 
     // if(event.target.elements.filename){
     //
-    //   console.log(event.target);
-    // }
+    //   console.log(event.target)// }
 
   }
 
