@@ -1,28 +1,8 @@
   'use strict';
-  var choiceOne;
-  var choiceTwo;
-  var choiceThree;
-  var pictureOne;
-  var pictureTwo;
-  var pictureThree;
-  var timeClicked;
-  var timesDisplayed;
-  var newNumbers;
-
   var counter = 0;  //click counter set to 0
 
-//generates random number from 1-19
-
-  function randomNumberGenerator () {
-    choiceOne = Math.floor(Math.random() * 19) + 1;
-    choiceTwo = Math.floor(Math.random() * 19) + 1;
-    choiceThree = Math.floor(Math.random() * 19) + 1;
-
-    pictureOne = pictureGallery[choiceOne]; //made new variable that ties into pictureGallery. works. comes back with random path when I call randomNumberGenerator function.
-    pictureTwo = pictureGallery[choiceTwo];
-    pictureThree = pictureGallery[choiceThree];
-  }
-
+    var resultList = document.getElementById('results');
+    console.log(resultList);
 
   var pictureGallery = []; //1. Create empty array
 
@@ -56,18 +36,24 @@
   new Images ('img/water-can.jpg', 'water-can');
   new Images ('img/wine-glass.jpg', 'wine-glass');
 
+  //generates random number from 1-19
+  function randomNumberGenerator () {
+    return Math.floor(Math.random() * 19) + 1;
+  }
   function displayImage (){   //4. Now Access -- function that displays the pictures on page
     var previousArray = [];
-    randomNumberGenerator(); //pulling the random number in
 
+    var pictureOne = pictureGallery[randomNumberGenerator()]; //pulling the random number in
     var leftImg = document.getElementById('left');
     leftImg.src = pictureOne.filepath;
     leftImg.alt = pictureOne.Whodis;
 
+    var pictureTwo = pictureGallery[randomNumberGenerator()];
     var centerImg = document.getElementById('center');
     centerImg.src = pictureTwo.filepath;
     centerImg.alt = pictureTwo.Whodis;
 
+    var pictureThree = pictureGallery[randomNumberGenerator()];
     var rightImg = document.getElementById('right');
     rightImg.src = pictureThree.filepath;
     rightImg.alt = pictureThree.Whodis;
@@ -77,27 +63,30 @@
     while (leftPicture === previousArray[0] || leftPicture === previousArray[1] || leftPicture === previousArray[2])
       {
       leftPicture = randomNumberGenerator();
-      break;
+
     }
-    left.src = pictureGallery[leftPicture];
+    left.src = pictureGallery[leftPicture].filepath;
 
     var centerPicture = randomNumberGenerator();
     while (centerPicture === previousArray[0] || centerPicture === previousArray[1] || centerPicture === previousArray[2] || centerPicture === leftPicture)
-      break;
+
     {
       centerPicture = randomNumberGenerator();
     }
-    center.src = pictureGallery[centerPicture];
+    center.src = pictureGallery[centerPicture].filepath;
 
     var rightPicture = randomNumberGenerator();
     while (rightPicture === previousArray[0] || rightPicture === previousArray[1] || rightPicture === previousArray[2]
     || rightPicture === leftPicture || rightPicture === centerPicture)
-      break;
+
     {
       rightPicture = randomNumberGenerator();
     }
-    right.src = pictureGallery[rightPicture];
+    right.src = pictureGallery[rightPicture].filepath;
 
+    pictureGallery[rightPicture].timesDisplayed += 1;
+    pictureGallery[centerPicture].timesDisplayed += 1;
+    pictureGallery[leftPicture].timesDisplayed += 1;
     previousArray.push(leftPicture);
     previousArray.push(centerPicture);
     previousArray.push(rightPicture);
@@ -119,18 +108,18 @@
       if(event.target.alt === pictureGallery[i].Whodis) {
         pictureGallery[i].timeClicked += 1;
         displayImage();
-        counter += 1;
       }
-      // if (counter === 25){
+    }
+    counter += 1;
+    console.log(counter);
+    if (counter === 25) {
+      rotateImages.removeEventListener('click', changeThePicturesShown);
+      for (var j = 0; j < pictureGallery.length; j++) {
+        var lineElement = document.createElement('li');
+        lineElement.textContent = pictureGallery[j].Whodis + ' : Displayed/Clicked - ' + pictureGallery[j].timesDisplayed + ' / ' + pictureGallery[j].timeClicked;
+        console.log(lineElement);
+        console.log(resultList);
+        resultList.appendChild(lineElement);
+    }
     }
   }
-
-
-    // if(event.target.elements.filename){
-    //
-    //   console.log(event.target)// }
-
-
-
-  // var valueForName = event.target.elements.filename.value;
-  // var valueForFilePath = event.target.elements.filepath.value;
