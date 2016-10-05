@@ -5,16 +5,12 @@
   var pictureOne;
   var pictureTwo;
   var pictureThree;
+  var timeClicked;
+  var timesDisplayed;
+  var newNumbers;
 
   var counter = 0;  //click counter set to 0
 
-//this is the array of pictures. I want to push images into arrayOfPictures randomly
-  var arrayOfPictures = [
-    'img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg',
-    'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg',
-    'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.jpg',
-    'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.jpg', 'img/water-can.jpg','img/wine-glass.jpg'
-  ];
 //generates random number from 1-19
 
   function randomNumberGenerator () {
@@ -22,49 +18,119 @@
     choiceTwo = Math.floor(Math.random() * 19) + 1;
     choiceThree = Math.floor(Math.random() * 19) + 1;
 
-    pictureOne = arrayOfPictures[choiceOne]; //made new variable that ties into arrayOfPictures. works. comes back with random     path    when i call randomNumberGenerator function.
-    pictureTwo = arrayOfPictures[choiceTwo];
-    pictureThree = arrayOfPictures[choiceThree];
+    pictureOne = pictureGallery[choiceOne]; //made new variable that ties into pictureGallery. works. comes back with random     path    when i call randomNumberGenerator function.
+    pictureTwo = pictureGallery[choiceTwo];
+    pictureThree = pictureGallery[choiceThree];
   }
 
-  function displayImage (){   //function that displays the pictures on page
-    randomNumberGenerator();
-    var leftImg = document.getElementById('left');
-    leftImg.src = pictureOne;
 
-    console.log();
+  var pictureGallery = []; //1. Create empty array
 
-    var centerImg = document.getElementById('center');
-    centerImg.src = pictureTwo;
-
-
-    var rightImg = document.getElementById('right');
-    rightImg.src = pictureThree;
-
-  }
-  randomNumberGenerator();//calling the function here.
-  displayImage(); //calling the function here.
-
-  function iteration (whoDatIs,filepath){   //Constructor : This is the "camera" and "film"
-    this.whoDatIs = whoDatIs;
+  function Images (filepath, Whodis){   //2. Constructor : Needs to be capital letter
+    this.Whodis = Whodis;
     this.filepath = filepath;
     this.timeClicked = 0;
     this.timesDisplayed = 0;
+    pictureGallery.push(this);
   }
+
+//3. Then create Object instances
+  new Images ('img/bag.jpg', 'bag');
+  new Images ('img/banana.jpg', 'banana');
+  new Images ('img/bathroom.jpg', 'bathroom');
+  new Images ('img/boots.jpg', 'boots');
+  new Images ('img/breakfast.jpg', 'breakfast');
+  new Images ('img/bubblegum.jpg', 'bubblegum');
+  new Images ( 'img/chair.jpg', 'chair');
+  new Images ('img/cthulhu.jpg', 'cthulhu');
+  new Images ('img/dog-duck.jpg', 'dog-duck');
+  new Images ('img/dragon.jpg', 'dragon');
+  new Images ('img/pen.jpg', 'pen');
+  new Images ('img/pet-sweep.jpg', 'pet-sweep');
+  new Images ('img/scissors.jpg', 'scissors');
+  new Images ('img/shark.jpg', 'shark');
+  new Images ('img/sweep.jpg', 'sweep');
+  new Images ('img/tauntaun.jpg', 'tauntaun');
+  new Images ('img/unicorn.jpg', 'unicorn');
+  new Images ('img/usb.jpg', 'usb');
+  new Images ('img/water-can.jpg', 'water-can');
+  new Images ('img/wine-glass.jpg', 'wine-glass');
+
+  function displayImage (){   //4. Now Access -- function that displays the pictures on page
+    var previousArray = [];
+    randomNumberGenerator(); //pulling the random number in
+
+    var leftImg = document.getElementById('left');
+    leftImg.src = pictureOne.filepath;
+    leftImg.alt = pictureOne.Whodis;
+
+    var centerImg = document.getElementById('center');
+    centerImg.src = pictureTwo.filepath;
+    centerImg.alt = pictureTwo.Whodis;
+
+    var rightImg = document.getElementById('right');
+    rightImg.src = pictureThree.filepath;
+    rightImg.alt = pictureThree.Whodis;
+
+    //don't show any duplicate code!
+    var leftPicture = randomNumberGenerator();
+    while (leftPicture === previousArray[0] || leftPicture === previousArray[1] || leftPicture === previousArray[2])
+      {
+      leftPicture = randomNumberGenerator();
+    }
+    left.src = pictureGallery[leftPicture].filepath;
+
+    var centerPicture = randomNumberGenerator();
+    while (centerPicture === previousArray[0] || centerPicture === previousArray[1] || centerPicture === previousArray[2] || centerPicture === leftPicture)
+    {
+      centerPicture = randomNumberGenerator();
+    }
+    center.src = pictureGallery[centerPicture].filepath;
+
+    var rightPicture = randomNumberGenerator();
+    while (rightPicture === previousArray[0] || rightPicture === previousArray[1] || rightPicture === previousArray[2]
+    || rightPicture === leftPicture || rightPicture === centerPicture)
+    {
+      rightPicture = randomNumberGenerator();
+    }
+    right.src = pictureGallery[rightPicture].filepath;
+
+    previousArray.push('left');
+    console.log(newPreviousArray);
+
+    previousArray.push(leftPicture);
+    previousArray.push(centerPicture);
+    previousArray.push(rightPicture);
+  }
+
+  displayImage(); //calling the function console.log(rightImg, pictureThree);here.
+
   // ***************************start the rotation process
 
   var rotateImages = document.getElementById('wrapper');
   rotateImages.addEventListener('click',changeThePicturesShown);  //this is the clicking of the camera
 
   function changeThePicturesShown(event) {
-    if(event.target.elements.whoDatIs){
-      timeClicked += 1;
-      timesDisplayed += 1;
-
-      console.log(event.target);
+    if (event.target.id === 'wrapper'){
+      alert('Please click on an image.');
     }
-    counter += 1;
+
+    for (var i = 0; i < pictureGallery.length; i++) {
+      if(event.target.alt === pictureGallery[i].Whodis) {
+        pictureGallery[i].timeClicked += 1;
+        displayImage();
+        counter += 1;
+      }
+      // if (counter === 25){
+    }
   }
-changeThePicturesShown();
-  // var valueForName = event.target.elements.whoDatIs.value;
+
+
+    // if(event.target.elements.filename){
+    //
+    //   console.log(event.target)// }
+
+
+
+  // var valueForName = event.target.elements.filename.value;
   // var valueForFilePath = event.target.elements.filepath.value;
