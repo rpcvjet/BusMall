@@ -1,8 +1,8 @@
   'use strict';
   var counter = 0;  //click counter set to 0
 
-    var resultList = document.getElementById('results');
-    console.log(resultList);
+  var resultList = document.getElementById('results');
+  console.log(resultList);
 
   var pictureGallery = []; //1. Create empty array
 
@@ -120,6 +120,44 @@
         console.log(lineElement);
         console.log(resultList);
         resultList.appendChild(lineElement);
-    }
+      }
     }
   }
+
+
+  var nameOfItemsAsShownOnChart = document.getElementById('canvas');
+  var itemName = [];
+  var clicked = [];
+
+  for (var i = 0; i < pictureGallery.length; i++) {
+    itemName[i] = pictureGallery[i].Whodis;
+    clicked[i] = pictureGallery[i].timeClicked;
+  }
+
+  var data = {
+labels: itemName, //
+datasets: [
+  {
+    data: clicked, // votes array we declared earlier
+    backgroundColor: [
+      'red'
+    ],
+  }]
+};
+
+function drawChart() {
+var ctx = document.getElementById('funky-chart').getContext('2d');
+songChart = new Chart(ctx,{
+  type: 'polarArea',
+  data: data,
+  options: {
+    responsive: false
+  },
+  scales: [{
+    ticks: {
+      beginAtZero:true
+    }
+  }]
+});
+chartDrawn = true;
+}
