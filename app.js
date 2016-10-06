@@ -1,8 +1,8 @@
   'use strict';
   var counter = 0;  //click counter set to 0
 
-    var resultList = document.getElementById('results');
-    console.log(resultList);
+  var resultList = document.getElementById('results');
+  console.log(resultList);
 
   var pictureGallery = []; //1. Create empty array
 
@@ -120,6 +120,47 @@
         console.log(lineElement);
         console.log(resultList);
         resultList.appendChild(lineElement);
+        prepareData();
+        drawChart();
+      }
     }
+  }
+
+
+  var nameOfItemsAsShownOnChart = document.getElementById('canvas');
+  var itemName = [];
+  var clicked = [];
+  function prepareData(){
+    for (var i = 0; i < pictureGallery.length; i++) {
+      itemName[i] = pictureGallery[i].Whodis;
+      clicked[i] = pictureGallery[i].timeClicked;
     }
+    console.log(itemName + ' ' + clicked);
+  }
+
+  var data = {
+    labels: itemName,
+    datasets: [
+      {
+        data: clicked,
+        label: 'clicks per item',
+        backgroundColor: 'red',
+      }]
+  };
+
+  function drawChart() {
+
+    var myFinalChart = new Chart(nameOfItemsAsShownOnChart,{
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: false
+      },
+      scales: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    });
+    console.log(myFinalChart);
   }
