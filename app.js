@@ -2,7 +2,6 @@
   var counter = 0;  //click counter set to 0
 
   var resultList = document.getElementById('results');
-  console.log(resultList);
 
   var pictureGallery = []; //1. Create empty array
 
@@ -15,26 +14,32 @@
   }
 
 //3. Then create Object instances
-  new Images ('img/bag.jpg', 'bag');
-  new Images ('img/banana.jpg', 'banana');
-  new Images ('img/bathroom.jpg', 'bathroom');
-  new Images ('img/boots.jpg', 'boots');
-  new Images ('img/breakfast.jpg', 'breakfast');
-  new Images ('img/bubblegum.jpg', 'bubblegum');
-  new Images ( 'img/chair.jpg', 'chair');
-  new Images ('img/cthulhu.jpg', 'cthulhu');
-  new Images ('img/dog-duck.jpg', 'dog-duck');
-  new Images ('img/dragon.jpg', 'dragon');
-  new Images ('img/pen.jpg', 'pen');
-  new Images ('img/pet-sweep.jpg', 'pet-sweep');
-  new Images ('img/scissors.jpg', 'scissors');
-  new Images ('img/shark.jpg', 'shark');
-  new Images ('img/sweep.jpg', 'sweep');
-  new Images ('img/tauntaun.jpg', 'tauntaun');
-  new Images ('img/unicorn.jpg', 'unicorn');
-  new Images ('img/usb.jpg', 'usb');
-  new Images ('img/water-can.jpg', 'water-can');
-  new Images ('img/wine-glass.jpg', 'wine-glass');
+  var fromLocalStorage = localStorage.getItem('pictureGallery');
+  if (fromLocalStorage){
+    pictureGallery = JSON.parse(fromLocalStorage);
+  } else {
+    new Images ('img/bag.jpg', 'bag');
+    new Images ('img/banana.jpg', 'banana');
+    new Images ('img/bathroom.jpg', 'bathroom');
+    new Images ('img/boots.jpg', 'boots');
+    new Images ('img/breakfast.jpg', 'breakfast');
+    new Images ('img/bubblegum.jpg', 'bubblegum');
+    new Images ( 'img/chair.jpg', 'chair');
+    new Images ('img/cthulhu.jpg', 'cthulhu');
+    new Images ('img/dog-duck.jpg', 'dog-duck');
+    new Images ('img/dragon.jpg', 'dragon');
+    new Images ('img/pen.jpg', 'pen');
+    new Images ('img/pet-sweep.jpg', 'pet-sweep');
+    new Images ('img/scissors.jpg', 'scissors');
+    new Images ('img/shark.jpg', 'shark');
+    new Images ('img/sweep.jpg', 'sweep');
+    new Images ('img/tauntaun.jpg', 'tauntaun');
+    new Images ('img/unicorn.jpg', 'unicorn');
+    new Images ('img/usb.jpg', 'usb');
+    new Images ('img/water-can.jpg', 'water-can');
+    new Images ('img/wine-glass.jpg', 'wine-glass');
+  }
+
 
   //generates random number from 1-19
   function randomNumberGenerator () {
@@ -98,7 +103,14 @@
 
   var rotateImages = document.getElementById('wrapper');
   rotateImages.addEventListener('click',changeThePicturesShown);  //this is the clicking of the camera
-
+  reset.addEventListener('click',resetLocalStorage);
+  refresh.addEventListener('click',refreshPage);
+  function resetLocalStorage(){
+    localStorage.clear();
+  }
+  function refreshPage(){
+    location.reload();
+  }
   function changeThePicturesShown(event) {
     if (event.target.id === 'wrapper'){
       alert('Please click on an image.');
@@ -110,6 +122,8 @@
         displayImage();
       }
     }
+    var toLocalStorage = JSON.stringify(pictureGallery);
+    localStorage.setItem('pictureGallery',toLocalStorage);
     counter += 1;
     console.log(counter);
     if (counter === 25) {
@@ -117,8 +131,6 @@
       for (var j = 0; j < pictureGallery.length; j++) {
         var lineElement = document.createElement('li');
         lineElement.textContent = pictureGallery[j].Whodis + ' : Displayed/Clicked - ' + pictureGallery[j].timesDisplayed + ' / ' + pictureGallery[j].timeClicked;
-        console.log(lineElement);
-        console.log(resultList);
         resultList.appendChild(lineElement);
         prepareData();
         drawChart();
@@ -135,7 +147,6 @@
       itemName[i] = pictureGallery[i].Whodis;
       clicked[i] = pictureGallery[i].timeClicked;
     }
-    console.log(itemName + ' ' + clicked);
   }
 
   var data = {
@@ -162,5 +173,4 @@
         }
       }]
     });
-    console.log(myFinalChart);
   }
