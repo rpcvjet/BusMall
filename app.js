@@ -120,6 +120,8 @@
         console.log(lineElement);
         console.log(resultList);
         resultList.appendChild(lineElement);
+        prepareData();
+        drawChart();
       }
     }
   }
@@ -128,36 +130,37 @@
   var nameOfItemsAsShownOnChart = document.getElementById('canvas');
   var itemName = [];
   var clicked = [];
-
-  for (var i = 0; i < pictureGallery.length; i++) {
-    itemName[i] = pictureGallery[i].Whodis;
-    clicked[i] = pictureGallery[i].timeClicked;
+  function prepareData(){
+    for (var i = 0; i < pictureGallery.length; i++) {
+      itemName[i] = pictureGallery[i].Whodis;
+      clicked[i] = pictureGallery[i].timeClicked;
+    }
+    console.log(itemName + ' ' + clicked);
   }
 
   var data = {
-labels: itemName, //
-datasets: [
-  {
-    data: clicked, // votes array we declared earlier
-    backgroundColor: [
-      'red'
-    ],
-  }]
-};
+    labels: itemName,
+    datasets: [
+      {
+        data: clicked,
+        label: 'clicks per item',
+        backgroundColor: 'red',
+      }]
+  };
 
-function drawChart() {
-var ctx = document.getElementById('funky-chart').getContext('2d');
-songChart = new Chart(ctx,{
-  type: 'polarArea',
-  data: data,
-  options: {
-    responsive: false
-  },
-  scales: [{
-    ticks: {
-      beginAtZero:true
-    }
-  }]
-});
-chartDrawn = true;
-}
+  function drawChart() {
+
+    var myFinalChart = new Chart(nameOfItemsAsShownOnChart,{
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: false
+      },
+      scales: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    });
+    console.log(myFinalChart);
+  }
