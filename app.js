@@ -38,7 +38,7 @@
 
   //generates random number from 1-19
   function randomNumberGenerator () {
-    return Math.floor(Math.random() * 19) + 1;
+    return Math.floor(Math.random() * 20) + 1;
   }
   function displayImage (){   //4. Now Access -- function that displays the pictures on page
     var previousArray = [];
@@ -143,8 +143,8 @@
     datasets: [
       {
         data: clicked,
-        label: 'clicks per item',
-        backgroundColor: 'red',
+        label: 'Clicks per tem',
+        backgroundColor: '#8e2382',
       }]
   };
 
