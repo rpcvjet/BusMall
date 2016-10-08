@@ -50,7 +50,7 @@
 
     var pictureOne = pictureGallery[randomNumberGenerator()]; //pulling the random number in
     var leftImg = document.getElementById('left');
-    leftImg.src = pictureOne.filepath;
+    leftImg.src = pictureOne.filepath; 
     leftImg.alt = pictureOne.Whodis;
 
     var pictureTwo = pictureGallery[randomNumberGenerator()];
